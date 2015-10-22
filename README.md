@@ -26,6 +26,7 @@ With the service up, you can start sending HTTP requests:
 
 
 #### How many users have I seen in the last minute for the login service?
+This example demostrates the rehydration of Algebird HLL Monoid from String fetched from Redis.
 ```
 $ curl http://localhost:9000/distinct/loginService
 {
@@ -38,6 +39,7 @@ $ curl http://localhost:9000/distinct/loginService
 
 
 #### How many users have I seen for the day of 2015-08-20 for the login service?
+This example demonstrates the rehydration of a collection of HLL Monoids from collection of Strings fetched from Redis. In addition, we demonstrate Algebird's native methods to Sum all the HLL Monoids and give us a distinct count for the day.
 ```
 $ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/distinct -d '{"begin": "2015-08-20", "servername": "loginService"}'
 {
