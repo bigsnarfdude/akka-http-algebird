@@ -25,7 +25,7 @@ $ curl http://localhost:9000/distinct/2015-08-21.loginService
   "servername": "loginService",
   "count": "18394",
   "interval": "minute",
-  "timestamp": "2015-08-14T12:54:00.000"
+  "timestamp": "2015-08-21T04:29:00.000"
 }
 ```
 
