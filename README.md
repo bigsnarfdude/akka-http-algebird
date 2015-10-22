@@ -1,6 +1,13 @@
 # Akka HTTP Algebird example
 
-This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library. Simple Scala REST service wrapping Algebird HLL library to make an analytics query engine to provide Distinct Counts for millions of items using [HyperLogLog Algorithm](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf).
+This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library. Simple Scala REST service wrapping Twitter Algebird HLL library to make an analytics query engine to provide Distinct Counts for millions of items using [HyperLogLog Algorithm](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf).
+
+HLLs are stored as Base64 encoded strings using Twitter Chill(Kryo under the covers) for every minute. 
+
+Key: `2015-08-21T04:29:00.000_loginService` 
+HLLValue: `encodedHLLString`
+Value: `18394`
+
 
 The service provides two REST endpoints - one which gives current distinct count on the last minute of activitiy on the requested key. 
 
