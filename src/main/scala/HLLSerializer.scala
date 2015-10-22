@@ -5,7 +5,7 @@ import org.apache.commons.codec.binary.Base64
 
 object HLLSerializer {
 
-    def decodeString(hllHash:String): com.twitter.algebird.HLL = {
+    def toString(hllHash:String): com.twitter.algebird.HLL = {
       // decode the string into bytes
       val bytes = Base64.decodeBase64(hllHash)
       // hyperll is a Hyperloglog data structure
@@ -14,7 +14,7 @@ object HLLSerializer {
       hyperll
     }
 
-    def encodeString(hll: HLL): String = {
+    def fromString(hll: HLL): String = {
       // takes hll and converts to bytes
       val bytes: Array[Byte] = kryo.toBytesWithClass(hll)
       // encode to Base64
