@@ -4,7 +4,7 @@ This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-an
 
 The service provides two REST endpoints - one which gives current distinct count on the last minute of activitiy on the requested key. 
 
-The second endpoint aggregates all timestamps matching a specific hour and returns distinct count for that hour on the requested key.
+The second endpoint aggregates all timestamps matching a specific day and returns distinct count for the entire day on the requested key.
 
 ## Usage
 
@@ -20,7 +20,7 @@ With the service up, you can start sending HTTP requests:
 
 #### How many users have I seen in the last minute for the login service?
 ```
-$ curl http://localhost:9000/distinct/2015-08-21.loginService
+$ curl http://localhost:9000/distinct/loginService
 {
   "servername": "loginService",
   "count": "18394",
@@ -28,7 +28,6 @@ $ curl http://localhost:9000/distinct/2015-08-21.loginService
   "timestamp": "2015-08-21T04:29:00.000"
 }
 ```
-
 
 
 #### How many users have I seen for the day of 2015-08-20 for the login service?
