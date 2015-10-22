@@ -1,8 +1,10 @@
 # Akka HTTP Algebird example
 
-This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library and Scala to write a simple REST service of Algebird HLL.
+This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library. Simple Scala REST service wrapping Algebird HLL library to make an analytics query engine to provide Distinct Counts for millions of items using [HyperLogLog Algorithm](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf).
 
-The service provides two REST endpoints - one which gives GeoIP info for given IP and another for calculating geographical distance between given pair of IPs. The project uses the service [Telize](http://www.telize.com/) which offers JSON IP and GeoIP REST API for free.
+The service provides two REST endpoints - one which gives current distinct count on the last minute of activitiy on the requested key. 
+
+The second endpoint aggregates all timestamps matching a specific hour and returns distinct count for that hour on the requested key.
 
 ## Usage
 
@@ -15,34 +17,28 @@ $ sbt
 
 With the service up, you can start sending HTTP requests:
 
+
+#### How many users have I seen in the last minute for the login service?
 ```
-$ curl http://localhost:9000/distinct/8.8.8.8
+$ curl http://localhost:9000/distinct/2015-08-21.loginService
 {
-  "city": "Mountain View",
-  "ip": "8.8.8.8",
-  "latitude": 37.386,
-  "country": "United States",
-  "longitude": -122.0838
+  "servername": "loginService",
+  "count": "18394",
+  "interval": "minute",
+  "timestamp": "2015-08-14T12:54:00.000"
 }
 ```
 
+
+
+#### How many users have I seen for the day of 2015-08-20 for the login service?
 ```
-$ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/ip -d '{"ip1": "8.8.8.8", "ip2": "8.8.4.4"}'
+$ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/distinct -d '{"begin": "2015-08-20", "servername": "loginService"}'
 {
-  "distance": 2201.448386715217,
-  "ip1Info": {
-    "city": "Mountain View",
-    "ip": "8.8.8.8",
-    "latitude": 37.386,
-    "country": "United States",
-    "longitude": -122.0838
-  },
-  "ip2Info": {
-    "ip": "8.8.4.4",
-    "country": "United States",
-    "latitude": 38.0,
-    "longitude": -97.0
-  }
+  "servername": "loginService",
+  "count": "138543",
+  "interval": "day",
+  "timestamp": "2015-08-20T00:00:00.000"
 }
 ```
 
