@@ -24,7 +24,7 @@ libraryDependencies ++= {
     "com.twitter" %% "chill" % "0.7.1",
     "com.twitter" %% "chill-algebird" % "0.7.1",
     "com.twitter" %% "chill-bijection" % "0.7.1",
-    "net.debasishg" %% "redisclient" % "2.13"
+    "net.debasishg" %% "redisclient" % "3.0"
   )
 }
 
