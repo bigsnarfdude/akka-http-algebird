@@ -12,11 +12,23 @@ import awscala.dynamodbv2.GlobalSecondaryIndex
 import com.amazonaws.services.{ dynamodbv2 => aws }
 
 
-/**
- * EventService Object holds all the functions for Redis Access
- */
-object EventService {
+import com.redis._
+import serialization._
+import Parse.Implicits._
+import Parse.Implicits.parseByteArray
 
+
+
+/**
+ * HLLService Object holds all the functions for Redis Access
+ */
+object HLLService {
+
+  val r = new RedisClient("localhost", 6379)
+  val s = r.get[Array[Byte]]("key")
+
+  val tryDecode: scala.util.Try[Any] = KryoInjection.invert(s.get)
+  val mmm = tryDecode.get.asInstanceOf[com.twitter.algebird.HLL]
   // sets DynamoDB client to us-east-1
   //implicit val dynamoDB = DynamoDB.at(Region.US_EAST_1)
 
