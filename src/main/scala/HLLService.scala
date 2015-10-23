@@ -24,7 +24,7 @@ import Parse.Implicits.parseByteArray
  */
 object HLLService {
 
-  private  val r = new RedisClient("localhost", 6379)
+  private val r = new RedisClient("localhost", 6379)
 
   def put(hll_key: String, hll_string: String): Boolean = {
     r.set(hll_key, hll_string)
