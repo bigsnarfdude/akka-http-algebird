@@ -5,7 +5,7 @@ This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-an
 
 HLLs are stored as Base64 encoded strings using Twitter Chill(Kryo under the covers) for every minute. 
 
-Key: `2015-08-21T04:29:00.000_loginService` 
+Key: `loginService-2015-08-21T04:29:00.000` 
 HLLValue: `encodedHLLString`
 Value: `18394`
 
