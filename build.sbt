@@ -24,7 +24,16 @@ libraryDependencies ++= {
     "com.twitter" %% "chill" % "0.7.1",
     "com.twitter" %% "chill-algebird" % "0.7.1",
     "com.twitter" %% "chill-bijection" % "0.7.1",
-    "net.debasishg" %% "redisclient" % "3.0"
+    "net.debasishg" %% "redisclient" % "3.0",
+          "org.scala-lang"     % "scala-reflect"                        % "2.11.7",
+          "com.typesafe.akka" %% "akka-slf4j"                           % "2.3.9",
+          "de.heikoseeberger" %% "akka-http-json4s"                     % "1.1.0",
+          "org.json4s"        %% "json4s-native"                        % "3.3.0",
+          "org.json4s"        %% "json4s-jackson"                       % "3.3.0",
+          "org.json4s"        %% "json4s-ext"                           % "3.3.0",
+          "com.fasterxml.jackson.core" % "jackson-databind"             % "2.6.3",
+          "com.fasterxml.jackson.core" % "jackson-core"                 % "2.6.3",
+          "org.scalatest"     %% "scalatest"                            % "2.2.5" % "test"
   )
 }
 
