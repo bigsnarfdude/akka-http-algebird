@@ -92,8 +92,14 @@ trait Service {
       deduped.map(_.Amount).foldLeft(0.0)(_ + _)
     }
 
-    def addHLL(hllData: List[String]): Unit = {
-      
+    def addHLLredis(hllUpdate: AddHLL): String = {
+      val numbs = Generator.oneMillionRandomNumbers
+      val hll = HLLMonoid.loadListInt(numbs)
+      val hll_string = HLLSerializer.toString(hll)
+      val now = new Date()
+      val key = hllUpdate.key + "_" + DateUtility.bucket(now)
+      HLLService.put(key, hll_string)
+      hll_string
     }
 
     logRequestResult("akka-http") {
@@ -106,15 +112,7 @@ trait Service {
       path("addHLL") {
         (post & path(Segment))
           entity(as[AddHLL]) { hllUpdate =>
-          complete {
-            val numbs = Generator.oneMillionRandomNumbers
-            val hll = HLLMonoid.loadListInt(numbs)
-            val hll_string = HLLSerializer.toString(hll)
-            val now = new Date()
-            val key = hllUpdate.key + "_" + DateUtility.bucket(now)
-            HLLService.put(key, hll_string)
-            hll_string
-          }
+          complete(addHLLredis(hllUpdate))
         }
       }
     }
