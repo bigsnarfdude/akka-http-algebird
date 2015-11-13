@@ -23,6 +23,8 @@ import akka.stream.scaladsl.{Flow, Sink, Source}
 import java.io.IOException
 import java.util.Date
 
+// twitter algebird
+import com.twitter.algebird.HyperLogLogMonoid
 
 trait Service {
 
@@ -92,14 +94,15 @@ trait Service {
       deduped.map(_.Amount).foldLeft(0.0)(_ + _)
     }
 
-    def addHLLredis(hllUpdate: AddHLL): String = {
+    def addHLLredis(hllUpdate: AddHLL): HLLResult = {
       val numbs = Generator.oneMillionRandomNumbers
       val hll = HLLMonoid.loadListInt(numbs)
+      val count = hll.estimatedSize
       val hll_string = HLLSerializer.toString(hll)
       val now = new Date()
       val key = hllUpdate.key + "_" + DateUtility.bucket(now)
       HLLService.put(key, hll_string)
-      hll_string
+      HLLResult(key, count, hll_string) 
     }
 
     logRequestResult("akka-http") {

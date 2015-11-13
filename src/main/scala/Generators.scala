@@ -21,6 +21,7 @@ object Generator {
       1 to numbersRequired map { _ => generator.nextInt(rangeNumber) }
     }
 
+    // 100,000 different numbers
     val oneMillionRandomNumbers = random_numbers(1000000, 100000).toList
     val moarRandomNumbers = random_numbers(100000, 200000).toList
     val unqiueNumbers = oneMillionRandomNumbers.toSet.size

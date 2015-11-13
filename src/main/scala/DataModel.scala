@@ -11,3 +11,5 @@ case class Result(sum: Double)
 case class Page(page: String)
 
 case class AddHLL(key: String, value: String)
+
+case class HLLResult(key: String, estimatedSize: Double, hllString: String)
