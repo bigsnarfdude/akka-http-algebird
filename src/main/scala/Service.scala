@@ -23,9 +23,6 @@ import akka.stream.scaladsl.{Flow, Sink, Source}
 import java.io.IOException
 import java.util.Date
 
-// twitter algebird
-import com.twitter.algebird.HyperLogLogMonoid
-
 trait Service {
 
   def routes(implicit ec: ExecutionContext, mat: Materializer, system: ActorSystem) = {
@@ -34,6 +31,8 @@ trait Service {
 
     implicit val serialization = jackson.Serialization
     implicit val formats = DefaultFormats
+
+    val MAGIC = "%%%"
 
     val mockConnectionFlow: Flow[HttpRequest, HttpResponse, Any] =
       Http().outgoingConnection(host="127.0.0.1", port=8000)
@@ -94,15 +93,24 @@ trait Service {
       deduped.map(_.Amount).foldLeft(0.0)(_ + _)
     }
 
+
     def addHLLredis(hllUpdate: AddHLL): HLLResult = {
       val numbs = Generator.oneMillionRandomNumbers
       val hll = HLLMonoid.loadListInt(numbs)
       val count = hll.estimatedSize
-      val hll_string = HLLSerializer.toString(hll)
+      val hll_string = HLLSerializer.toMagicString(hll)
       val now = new Date()
-      val key = hllUpdate.key + "_" + DateUtility.bucket(now)
-      HLLService.put(key, hll_string)
-      HLLResult(key, count, hll_string) 
+      val keyed = hllUpdate.key + "_" + DateUtility.bucket(now)
+      val dehydrated = HLLService.put(keyed, hll_string)
+      // potential error handling for failed key updates
+      HLLResult(keyed, count, hll_string) 
+    }
+
+    def getHLL(hllGet: AddHLL): Result = {
+      val key = hllGet.key //"loginService_2015-11-13T12:50:00.000"
+      val keyed = HLLService.get(key)
+      val hydratedHLL = HLLSerializer.fromMagicString(keyed.get)
+      Result(hydratedHLL.estimatedSize)
     }
 
     logRequestResult("akka-http") {
@@ -116,6 +124,12 @@ trait Service {
         (post & path(Segment))
           entity(as[AddHLL]) { hllUpdate =>
           complete(addHLLredis(hllUpdate))
+        }
+      } ~
+      path("getHLL") {
+        (post & path(Segment))
+          entity(as[AddHLL]) { hllGet =>
+          complete(getHLL(hllGet))
         }
       }
     }
