@@ -21,6 +21,7 @@ import akka.stream.scaladsl.{Flow, Sink, Source}
 
 // java
 import java.io.IOException
+import java.util.Date
 
 
 trait Service {
@@ -104,15 +105,15 @@ trait Service {
       } ~
       path("addHLL") {
         (post & path(Segment))
-          entity(as[AddHLL]) { hllData =>
+          entity(as[AddHLL]) { hllUpdate =>
           complete {
             val numbs = Generator.oneMillionRandomNumbers
             val hll = HLLMonoid.loadListInt(numbs)
             val hll_string = HLLSerializer.toString(hll)
-            val key = s"loginService-2015-08-14T12:57:00.000"
+            val now = new Date()
+            val key = hllUpdate.key + "_" + DateUtility.bucket(now)
             HLLService.put(key, hll_string)
-            "true"
-            // HLLService.put(hll_key="loginService_2015-11-13T04:29:00.000" , hll_string)
+            hll_string
           }
         }
       }
