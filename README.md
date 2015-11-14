@@ -25,12 +25,15 @@ With the service up, you can start sending HTTP requests to the different endpoi
 
 #### Add UUID value to the loginService and return the distinct users seen for the interval:
 ```
-$ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/addHLL -d '{"servername": "loginService", "value": "4cd4f31f-3de2-4428-b457-04b75396214e"}'
+$curl -i \
+  -H "Accept: application/json" \
+  -H "X-HTTP-Method-Override: PUT" \
+  -X POST -d '{"servername": "loginService", "value": "4cd4f31f-3de2-4428-b457-04b75396214e"}' \
+  http://localhost:9000/addHLL
 {
-  "servername": "loginService",
-  "estimatedSize": 138543.13492371982,
-  "interval": "day",
-  "timestamp": "2015-08-21T00:00:00.000"
+  "key": "loginService_2015-11-13T18:47:00.000",
+  "estimatedSize": 99797.80031724533,
+  "hllString": "%%%AQBjb20udHdpdHRlci5hbGdlYmlyZC5EZW5zZUhMzIIgAgwFBgYEBwYECAYEBQYFBAwEAwgFBQUMCAQFBwgEBAUFBgQGCAoKBwQIBgUIBwUEBwMFBAkHBAQHBgYIBgcECQgIBQcFBQcFCAMJBAUEBAUEAwkGBQcFBQcFBQQFBwUICgYHBgUIBwQEBwUFCQYDCAUDCAoGBgUHBgUHCwQICAMGCQUFBQMKBgcECAYFBQUDBQMECAcFBgUFBQQDBwgHBgUGCQcIBAUFBgcGCAUGBgYGBgcGBQgFBQkHBgYHBQwFBwUFCggEBwYHBAUGBQcFBgYDBwYECgYFBgcFBwYGCAUFBAkGBAQFCAYFBwUFBQYGBQcHBgcFBQQFBwcFAwQGBQYHBAYGBQgGBQYGBQMFCwcEBwcEBAUMBggGBgQJBwUIBQYGAwUEBggHBgUGBAUFBgQGBgYHBgUHBQUGBwMEAwcEBwUMBwcFCAcFCAQDBAcGBAgGBQcHCwQFBQgGAwUKBAYJCAUGBgYICgUFBQYIBQcFAw"
 }
 ```
 
