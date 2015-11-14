@@ -106,8 +106,16 @@ trait Service {
       HLLResult(keyed, count, hll_string) 
     }
 
-    def getHLL(hllGet: AddHLL): Result = {
+    def getHLLestimatedSize(hllGet: AddHLL): Result = {
       val key = hllGet.key //"loginService_2015-11-13T12:50:00.000"
+      val keyed = HLLService.get(key)
+      val hydratedHLL = HLLSerializer.fromMagicString(keyed.get)
+      Result(hydratedHLL.estimatedSize)
+    }
+
+
+    def getDistinct(key: String): Result = {
+      //"loginService_2015-11-13T12:50:00.000"
       val keyed = HLLService.get(key)
       val hydratedHLL = HLLSerializer.fromMagicString(keyed.get)
       Result(hydratedHLL.estimatedSize)
@@ -120,16 +128,21 @@ trait Service {
           complete(Result(deDuped(jsonPage.page)))
         }
       } ~
+      path("getHLL") {
+        (post & path(Segment))
+          entity(as[AddHLL]) { hllGet =>
+          complete(getHLLestimatedSize(hllGet))
+        }
+      } ~
       path("addHLL") {
         (post & path(Segment))
           entity(as[AddHLL]) { hllUpdate =>
           complete(addHLLredis(hllUpdate))
         }
       } ~
-      path("getHLL") {
-        (post & path(Segment))
-          entity(as[AddHLL]) { hllGet =>
-          complete(getHLL(hllGet))
+      get { 
+        path("distinct" / Segment) { serverName =>
+          complete(getDistinct(serverName))
         }
       }
     }

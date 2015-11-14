@@ -19,22 +19,28 @@ The second endpoint aggregates all timestamps matching a specific day and return
 Start services with sbt:
 
 ```
-$ sbt
-> ~re-start
+$ sbt run
 ```
 
-With the service up, you can start sending HTTP requests:
+With the service up, you can start sending HTTP requests to the different endpoints:
 
 
-#### How many users have I seen in the last minute for the login service?
-This example demostrates the rehydration of Algebird HLL Monoid from String fetched from Redis.
+#### Add UUID value to the loginService and return the distinct users seen for the interval:
 ```
-$ curl http://localhost:9000/distinct/loginService
+$ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/addHLL -d '{"servername": "loginService", "value": "4cd4f31f-3de2-4428-b457-04b75396214e"}'
 {
   "servername": "loginService",
-  "count": "18394",
-  "interval": "minute",
-  "timestamp": "2015-08-21T04:29:00.000"
+  "count": "138543",
+  "interval": "day",
+  "timestamp": "2015-08-20T00:00:00.000"
+}
+```
+#### How many distinct users was seen for the loginService at 2015-08-21T04:29:00.000 ?
+This endpoint demonstrates the rehydration of Algebird HLL Monoid from String fetched from Redis.
+```
+$ curl http://localhost:9000/distinct/loginService_2015-08-21T04:29:00.000
+{
+  "estimatedSize": 99810.66492371981
 }
 ```
 

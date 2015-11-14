@@ -13,3 +13,7 @@ case class Page(page: String)
 case class AddHLL(key: String, value: String)
 
 case class HLLResult(key: String, estimatedSize: Double, hllString: String)
+
+case class GetHyperLogLog(servername: String, count: String, interval: String, timestamp: String)
+
+case class EstimatedSize(servername: String, interval: String, estimatedSize: Double)
