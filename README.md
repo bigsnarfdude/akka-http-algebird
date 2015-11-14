@@ -3,7 +3,9 @@
 
 This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library. Simple Scala REST service wrapping Twitter Algebird HLL library to make an analytics query engine to provide Distinct Counts for millions of items using [HyperLogLog Algorithm](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf).
 
-HLLs are stored as Base64 encoded strings using Twitter Chill(Kryo under the covers) for every minute. 
+You will need Redis. This Akka HTTP project persists data to Redis.
+
+HLLs are stored as Base64 encoded strings using Twitter Chill (Kryo under the covers) for every minute. 
 
 Key: `loginService-2015-08-21T04:29:00.000` 
 HLLValue: `encodedHLLString`
@@ -31,7 +33,7 @@ $curl -i \
   -X POST -d '{"servername": "loginService", "value": "4cd4f31f-3de2-4428-b457-04b75396214e"}' \
   http://localhost:9000/addHLL
 {
-  "key": "loginService_2015-11-13T18:47:00.000",
+  "key": "loginService_2015-10-21T18:47:00.000",
   "estimatedSize": 99797.80031724533,
   "hllString": "%%%AQBjb20udHdpdHRlci5hbGdlYmlyZC5EZW5zZUhMzIIgAgwFBgYEBwYECAYEBQYFBAwEAwgFBQUMCAQFBwgEBAUFBgQGCAoKBwQIBgUIBwUEBwMFBAkHBAQHBgYIBgcECQgIBQcFBQcFCAMJBAUEBAUEAwkGBQcFBQcFBQQFBwUICgYHBgUIBwQEBwUFCQYDCAUDCAoGBgUHBgUHCwQICAMGCQUFBQMKBgcECAYFBQUDBQMECAcFBgUFBQQDBwgHBgUGCQcIBAUFBgcGCAUGBgYGBgcGBQgFBQkHBgYHBQwFBwUFCggEBwYHBAUGBQcFBgYDBwYECgYFBgcFBwYGCAUFBAkGBAQFCAYFBwUFBQYGBQcHBgcFBQQFBwcFAwQGBQYHBAYGBQgGBQYGBQMFCwcEBwcEBAUMBggGBgQJBwUIBQYGAwUEBggHBgUGBAUFBgQGBgYHBgUHBQUGBwMEAwcEBwUMBwcFCAcFCAQDBAcGBAgGBQcHCwQFBQgGAwUKBAYJCAUGBgYICgUFBQYIBQcFAw"
 }
