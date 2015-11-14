@@ -1,44 +1,48 @@
-# Akka HTTP Algebird example
+# Project Rehydrate
+## Akka HTTP Algebird example
 
-This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library. Simple Scala REST service wrapping Algebird HLL library to make an analytics query engine to provide Distinct Counts for millions of items using [HyperLogLog Algorithm](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf).
+This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html) library. Simple Scala REST service wrapping Twitter Algebird HLL library to make an analytics query engine to provide Distinct Counts for millions of items using [HyperLogLog Algorithm](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf).
 
-The service provides two REST endpoints - one which gives current distinct count on the last minute of activitiy on the requested key. 
+HLLs are stored as Base64 encoded strings using Twitter Chill(Kryo under the covers) for every minute. 
 
-The second endpoint aggregates all timestamps matching a specific hour and returns distinct count for that hour on the requested key.
+Key: `loginService-2015-08-21T04:29:00.000` 
+HLLValue: `encodedHLLString`
+Value: `18394`
+
 
 ## Usage
 
 Start services with sbt:
 
 ```
-$ sbt
-> ~re-start
+$ sbt run
 ```
 
-With the service up, you can start sending HTTP requests:
 
+The service provides 2 REST endpoints:
 
-#### How many users have I seen in the last minute for the login service?
+With the service up, you can start sending HTTP requests to the different endpoints:
+
+#### Add UUID value to the loginService and return the distinct users seen for the interval:
 ```
-$ curl http://localhost:9000/distinct/2015-08-21.loginService
+$curl -i \
+  -H "Accept: application/json" \
+  -H "X-HTTP-Method-Override: PUT" \
+  -X POST -d '{"servername": "loginService", "value": "4cd4f31f-3de2-4428-b457-04b75396214e"}' \
+  http://localhost:9000/addHLL
 {
-  "servername": "loginService",
-  "count": "18394",
-  "interval": "minute",
-  "timestamp": "2015-08-14T12:54:00.000"
+  "key": "loginService_2015-11-13T18:47:00.000",
+  "estimatedSize": 99797.80031724533,
+  "hllString": "%%%AQBjb20udHdpdHRlci5hbGdlYmlyZC5EZW5zZUhMzIIgAgwFBgYEBwYECAYEBQYFBAwEAwgFBQUMCAQFBwgEBAUFBgQGCAoKBwQIBgUIBwUEBwMFBAkHBAQHBgYIBgcECQgIBQcFBQcFCAMJBAUEBAUEAwkGBQcFBQcFBQQFBwUICgYHBgUIBwQEBwUFCQYDCAUDCAoGBgUHBgUHCwQICAMGCQUFBQMKBgcECAYFBQUDBQMECAcFBgUFBQQDBwgHBgUGCQcIBAUFBgcGCAUGBgYGBgcGBQgFBQkHBgYHBQwFBwUFCggEBwYHBAUGBQcFBgYDBwYECgYFBgcFBwYGCAUFBAkGBAQFCAYFBwUFBQYGBQcHBgcFBQQFBwcFAwQGBQYHBAYGBQgGBQYGBQMFCwcEBwcEBAUMBggGBgQJBwUIBQYGAwUEBggHBgUGBAUFBgQGBgYHBgUHBQUGBwMEAwcEBwUMBwcFCAcFCAQDBAcGBAgGBQcHCwQFBQgGAwUKBAYJCAUGBgYICgUFBQYIBQcFAw"
 }
 ```
 
-
-
-#### How many users have I seen for the day of 2015-08-20 for the login service?
+#### How many distinct users was seen for the loginService at 2015-08-21T04:29:00.000 ?
+This endpoint demonstrates the rehydration of Algebird HLL Monoid from String fetched from Redis.
 ```
-$ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/distinct -d '{"begin": "2015-08-20", "servername": "loginService"}'
+$ curl http://localhost:9000/distinct/loginService_2015-08-21T04:29:00.000
 {
-  "servername": "loginService",
-  "count": "138543",
-  "interval": "day",
-  "timestamp": "2015-08-20T00:00:00.000"
+  "estimatedSize": 99810.66492371981
 }
 ```
 
