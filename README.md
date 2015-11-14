@@ -30,9 +30,9 @@ With the service up, you can start sending HTTP requests to the different endpoi
 $ curl -X POST -H 'Content-Type: application/json' http://localhost:9000/addHLL -d '{"servername": "loginService", "value": "4cd4f31f-3de2-4428-b457-04b75396214e"}'
 {
   "servername": "loginService",
-  "count": "138543",
+  "estimatedSize": 138543.13492371982,
   "interval": "day",
-  "timestamp": "2015-08-20T00:00:00.000"
+  "timestamp": "2015-08-21T00:00:00.000"
 }
 ```
 #### How many distinct users was seen for the loginService at 2015-08-21T04:29:00.000 ?
