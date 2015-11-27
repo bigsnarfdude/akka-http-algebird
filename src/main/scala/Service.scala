@@ -95,7 +95,7 @@ trait Service {
 
 
     def addHLLredis(hllUpdate: AddHLL): HLLResult = {
-      val numbs = Generator.oneMillionRandomNumbers
+      val numbs = Generators.oneMillionRandomNumbers
       val hll = HLLMonoid.loadListInt(numbs)
       val count = hll.estimatedSize
       val hll_string = HLLSerializer.toMagicString(hll)

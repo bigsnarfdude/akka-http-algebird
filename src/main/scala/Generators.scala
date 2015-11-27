@@ -1,4 +1,4 @@
-object Generator {
+object Generators {
 
 
     def uuid = java.util.UUID.randomUUID.toString

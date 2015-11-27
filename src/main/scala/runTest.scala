@@ -6,7 +6,7 @@ object runTest {
 
     def runTest(numbersRequired: Int){
       for (i <- 1 to numbersRequired) {
-        val numbs = Generator.oneMillionRandomNumbers
+        val numbs = Generators.oneMillionRandomNumbers
         val hll = HLLMonoid.loadListInt(numbs)
         val hll_string = HLLSerializer.toMagicString(hll)
         val key = s"loginService-2015-08-14T12:5$i:00.000"
