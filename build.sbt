@@ -7,6 +7,8 @@ scalaVersion := "2.11.7"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
+// TODO: need to use transactional client from Twitter Finagle instead of debasishg redisclient
+
 libraryDependencies ++= {
   val akkaV       = "2.3.12"
   val akkaStreamV = "1.0"
