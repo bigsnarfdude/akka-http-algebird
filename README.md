@@ -6,7 +6,10 @@ This project demonstrates the [Akka HTTP](http://doc.akka.io/docs/akka-stream-an
 References: 
 
 https://twitter.github.io/algebird/datatypes/approx/hyperloglog.html
+
 https://en.wikipedia.org/wiki/Monad_(functional_programming)
+
+http://antirez.com/news/75
 
 You will need Redis. This Akka HTTP project persists data to Redis.
 
