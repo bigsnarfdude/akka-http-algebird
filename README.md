@@ -9,6 +9,8 @@ https://en.wikipedia.org/wiki/Category:Probabilistic_data_structures
 
 https://twitter.github.io/algebird/datatypes/approx/hyperloglog.html
 
+http://twitter.github.io/algebird/datatypes/approx/exponential_histogram.html
+
 https://en.wikipedia.org/wiki/Monad_(functional_programming)
 
 http://antirez.com/news/75
