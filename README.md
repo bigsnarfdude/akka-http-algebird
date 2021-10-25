@@ -11,6 +11,14 @@ https://en.wikipedia.org/wiki/Monad_(functional_programming)
 
 http://antirez.com/news/75
 
+https://github.com/CamDavidsonPilon/tdigest
+
+https://github.com/CamDavidsonPilon/lifetimes
+
+https://github.com/CamDavidsonPilon/lifelines
+
+https://webd.is/
+
 You will need Redis. This Akka HTTP project persists data to Redis.
 
 HLLs are stored as Base64 encoded strings using Twitter Chill (Kryo under the covers) for every minute. 
