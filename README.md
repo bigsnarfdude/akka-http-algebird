@@ -23,6 +23,8 @@ https://github.com/CamDavidsonPilon/lifelines
 
 https://webd.is/
 
+https://en.wikipedia.org/wiki/Slowly_changing_dimension
+
 You will need Redis. This Akka HTTP project persists data to Redis.
 
 HLLs are stored as Base64 encoded strings using Twitter Chill (Kryo under the covers) for every minute. 
