@@ -25,6 +25,9 @@ https://webd.is/
 
 https://en.wikipedia.org/wiki/Slowly_changing_dimension
 
+https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/MapAlgebra.scala#L196
+
+
 You will need Redis. This Akka HTTP project persists data to Redis.
 
 HLLs are stored as Base64 encoded strings using Twitter Chill (Kryo under the covers) for every minute. 
