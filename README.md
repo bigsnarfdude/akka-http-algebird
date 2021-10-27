@@ -27,6 +27,9 @@ https://en.wikipedia.org/wiki/Slowly_changing_dimension
 
 https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/MapAlgebra.scala#L196
 
+https://gist.github.com/bigsnarfdude/ff8fbbfd1c038a97a3b0
+
+
 
 You will need Redis. This Akka HTTP project persists data to Redis.
 
