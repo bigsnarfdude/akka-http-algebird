@@ -31,7 +31,7 @@ https://gist.github.com/bigsnarfdude/ff8fbbfd1c038a97a3b0
 
 https://github.com/isarn/isarn-sketches-spark
 
-
+https://github.com/isarn/isarn-sketches-algebird-api
 
 
 You will need Redis. This Akka HTTP project persists data to Redis.
