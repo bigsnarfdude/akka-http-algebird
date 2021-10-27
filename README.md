@@ -29,6 +29,9 @@ https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/co
 
 https://gist.github.com/bigsnarfdude/ff8fbbfd1c038a97a3b0
 
+https://github.com/isarn/isarn-sketches-spark
+
+
 
 
 You will need Redis. This Akka HTTP project persists data to Redis.
