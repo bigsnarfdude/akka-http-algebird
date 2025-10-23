@@ -96,6 +96,6 @@ $ sbt
 
 If you have any questions regarding this project contact:
 
-@bigsnarfdude on Twitter
+bigsnarfdude on Github 
 
 For licensing info see LICENSE file in project's root directory.
